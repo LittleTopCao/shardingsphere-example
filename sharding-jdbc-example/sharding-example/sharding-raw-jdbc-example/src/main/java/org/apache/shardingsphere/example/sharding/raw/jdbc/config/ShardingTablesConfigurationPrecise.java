@@ -32,25 +32,48 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 精确的 数据表 分片
+ *
+ * 一个数据库
+ *
+ */
 public final class ShardingTablesConfigurationPrecise implements ExampleConfiguration {
     
     @Override
     public DataSource getDataSource() throws SQLException {
+
+        //整体规则
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
+        //添加 order 表
         shardingRuleConfig.getTableRuleConfigs().add(getOrderTableRuleConfiguration());
+        //添加 order item 表
         shardingRuleConfig.getTableRuleConfigs().add(getOrderItemTableRuleConfiguration());
+        //设置绑定表
         shardingRuleConfig.getBindingTableGroups().add("t_order, t_order_item");
+        //设置广播表
         shardingRuleConfig.getBroadcastTables().add("t_address");
+        //设置默认 表的 分片规则
         shardingRuleConfig.setDefaultTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("order_id", new PreciseModuloShardingTableAlgorithm()));
+
+
         return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, new Properties());
     }
-    
+
+    /**
+     * order 表的 规则 配置
+     * @return
+     */
     private static TableRuleConfiguration getOrderTableRuleConfiguration() {
         TableRuleConfiguration result = new TableRuleConfiguration("t_order", "demo_ds.t_order_${[0, 1]}");
         result.setKeyGeneratorConfig(new KeyGeneratorConfiguration("SNOWFLAKE", "order_id", getProperties()));
         return result;
     }
-    
+
+    /**
+     * OrderItem 表的 规则配置
+     * @return
+     */
     private static TableRuleConfiguration getOrderItemTableRuleConfiguration() {
         TableRuleConfiguration result = new TableRuleConfiguration("t_order_item", "demo_ds.t_order_item_${[0, 1]}");
         result.setKeyGeneratorConfig(new KeyGeneratorConfiguration("SNOWFLAKE", "order_item_id", getProperties()));

@@ -22,10 +22,15 @@ import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
 
 import java.util.Collection;
 
+/**
+ * 精确的 表的 分片算法
+ */
 public final class PreciseModuloShardingTableAlgorithm implements PreciseShardingAlgorithm<Long> {
     
     @Override
     public String doSharding(final Collection<String> tableNames, final PreciseShardingValue<Long> shardingValue) {
+        System.out.println(tableNames);
+        System.out.println(shardingValue);
         for (String each : tableNames) {
             if (each.endsWith(shardingValue.getValue() % 2 + "")) {
                 return each;

@@ -25,6 +25,9 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * 范围算法
+ */
 public final class RangeModuloShardingDatabaseAlgorithm implements RangeShardingAlgorithm<Integer> {
     
     @Override

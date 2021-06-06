@@ -33,6 +33,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 精确的 数据库 和 数据表 分片
+ */
 public final class ShardingDatabasesAndTablesConfigurationPrecise implements ExampleConfiguration {
     
     @Override

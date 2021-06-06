@@ -33,16 +33,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+
 public final class ShardingDatabasesConfigurationRange implements ExampleConfiguration {
     
     @Override
     public DataSource getDataSource() throws SQLException {
+        //分片配置
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
+        //order 配置
         shardingRuleConfig.getTableRuleConfigs().add(getOrderTableRuleConfiguration());
+        //order item 配置
         shardingRuleConfig.getTableRuleConfigs().add(getOrderItemTableRuleConfiguration());
+        //广播表
         shardingRuleConfig.getBroadcastTables().add("t_address");
+        //设置数据库 默认策略
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(
                 new StandardShardingStrategyConfiguration("user_id", new PreciseModuloShardingDatabaseAlgorithm(), new RangeModuloShardingDatabaseAlgorithm()));
+
         return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, new Properties());
     }
     
@@ -57,7 +64,11 @@ public final class ShardingDatabasesConfigurationRange implements ExampleConfigu
         result.setKeyGeneratorConfig(new KeyGeneratorConfiguration("SNOWFLAKE", "order_item_id", getProperties()));
         return result;
     }
-    
+
+    /**
+     * 数据源
+     * @return
+     */
     private static Map<String, DataSource> createDataSourceMap() {
         Map<String, DataSource> result = new HashMap<>();
         result.put("demo_ds_0", DataSourceUtil.createDataSource("demo_ds_0"));

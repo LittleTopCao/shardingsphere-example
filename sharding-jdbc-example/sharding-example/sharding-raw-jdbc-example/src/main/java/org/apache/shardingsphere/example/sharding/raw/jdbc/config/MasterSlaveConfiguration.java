@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 读写分离 配置
+ */
 public final class MasterSlaveConfiguration implements ExampleConfiguration {
     
     @Override

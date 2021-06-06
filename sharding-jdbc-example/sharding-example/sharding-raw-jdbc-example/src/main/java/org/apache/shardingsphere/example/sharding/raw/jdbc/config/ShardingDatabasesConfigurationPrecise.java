@@ -32,16 +32,39 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 精确 的 数据库 分片 类型
+ *
+ * 使用 行表达式配置的 分片策略，根据 user_id 路由 数据库
+ *
+ */
 public final class ShardingDatabasesConfigurationPrecise implements ExampleConfiguration {
     
     @Override
     public DataSource getDataSource() throws SQLException {
+
+        //创建数据源
+        Map<String, DataSource> dataSourceMap = createDataSourceMap();
+
+        //新建分片规则
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
+
+        //设置 Order 表规则
         shardingRuleConfig.getTableRuleConfigs().add(getOrderTableRuleConfiguration());
+
+        //设置 OrderItem 表规则
         shardingRuleConfig.getTableRuleConfigs().add(getOrderItemTableRuleConfiguration());
+
+        //设置广播表 t_address
         shardingRuleConfig.getBroadcastTables().add("t_address");
+
+        //设置 默认 数据库 分片 策略
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("user_id", "demo_ds_${user_id % 2}"));
-        return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, new Properties());
+
+        //新建一个 sharding 数据源
+        DataSource dataSource = ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingRuleConfig, new Properties());
+
+        return dataSource;
     }
     
     private static TableRuleConfiguration getOrderTableRuleConfiguration() {

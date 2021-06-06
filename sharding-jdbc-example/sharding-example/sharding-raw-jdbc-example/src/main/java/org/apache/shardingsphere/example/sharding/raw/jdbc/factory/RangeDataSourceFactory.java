@@ -27,6 +27,13 @@ import org.apache.shardingsphere.example.type.ShardingType;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+/**
+ * 范围分片
+ *
+ * 数据源工厂，根据分片类型 选择 相应的配置
+ *
+ *
+ */
 public class RangeDataSourceFactory {
     
     public static DataSource newInstance(final ShardingType shardingType) throws SQLException {

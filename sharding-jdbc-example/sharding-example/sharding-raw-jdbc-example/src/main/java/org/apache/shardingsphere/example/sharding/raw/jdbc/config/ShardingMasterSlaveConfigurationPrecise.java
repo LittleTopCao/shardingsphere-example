@@ -37,6 +37,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 分片 和 读写分离 配置
+ */
 public final class ShardingMasterSlaveConfigurationPrecise implements ExampleConfiguration {
     
     @Override

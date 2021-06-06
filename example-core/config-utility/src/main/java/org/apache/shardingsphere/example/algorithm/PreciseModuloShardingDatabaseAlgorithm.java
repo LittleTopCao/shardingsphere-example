@@ -22,6 +22,9 @@ import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
 
 import java.util.Collection;
 
+/**
+ * 精确 算法
+ */
 public final class PreciseModuloShardingDatabaseAlgorithm implements PreciseShardingAlgorithm<Integer> {
     
     @Override
