@@ -26,9 +26,15 @@ import java.util.Collection;
  * 精确 算法
  */
 public final class PreciseModuloShardingDatabaseAlgorithm implements PreciseShardingAlgorithm<Integer> {
-    
+
+    /**
+     * @param databaseNames 拥有的的数据源名
+     * @param shardingValue 分片键的值
+     * @return 要使用的数据源名
+     */
     @Override
     public String doSharding(final Collection<String> databaseNames, final PreciseShardingValue<Integer> shardingValue) {
+        System.out.println("PreciseModuloShardingDatabaseAlgorithm算法，参数 databaseNames = " + databaseNames + "; key = " + shardingValue.getValue());
         for (String each : databaseNames) {
             if (each.endsWith(shardingValue.getValue() % 2 + "")) {
                 return each;

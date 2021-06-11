@@ -26,7 +26,13 @@ import java.util.Collection;
  * 精确的 表的 分片算法
  */
 public final class PreciseModuloShardingTableAlgorithm implements PreciseShardingAlgorithm<Long> {
-    
+
+    /**
+     *
+     * @param tableNames 多个表名
+     * @param shardingValue 分片键的值
+     * @return 返回一个表名
+     */
     @Override
     public String doSharding(final Collection<String> tableNames, final PreciseShardingValue<Long> shardingValue) {
         System.out.println(tableNames);

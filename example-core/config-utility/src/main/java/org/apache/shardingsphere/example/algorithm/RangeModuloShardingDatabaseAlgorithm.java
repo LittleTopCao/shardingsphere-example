@@ -29,7 +29,13 @@ import java.util.Set;
  * 范围算法
  */
 public final class RangeModuloShardingDatabaseAlgorithm implements RangeShardingAlgorithm<Integer> {
-    
+
+    /**
+     *
+     * @param databaseNames 数据源列表
+     * @param shardingValueRange 打包了一个 Range ，它的全类名是 com.google.common.collect.Range
+     * @return 返回多个数据源
+     */
     @Override
     public Collection<String> doSharding(final Collection<String> databaseNames, final RangeShardingValue<Integer> shardingValueRange) {
         Set<String> result = new LinkedHashSet<>();

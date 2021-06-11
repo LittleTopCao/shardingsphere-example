@@ -25,8 +25,18 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * 范围 表 算法
+ */
 public final class RangeModuloShardingTableAlgorithm implements RangeShardingAlgorithm<Long> {
-    
+
+
+    /**
+     *
+     * @param tableNames 多个表名
+     * @param shardingValue 打包了一个 Range ，它的全类名是 com.google.common.collect.Range
+     * @return 返回多个表名
+     */
     @Override
     public Collection<String> doSharding(final Collection<String> tableNames, final RangeShardingValue<Long> shardingValue) {
         Set<String> result = new LinkedHashSet<>();
